@@ -9,21 +9,11 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <h1>CityPop</h1>
-          <WelcomePage />
-        </div>
+      
         <Switch>
           <Route exact path="/" component={WelcomePage} />
-          <Route exact path="/SearchByCity" component={SearchByCity} />
-          <Route exact path="/SearchByCountry" component={SearchByCountry} />
+          <Route exact path="/searchByCity" component={SearchByCity} />
+          <Route exact path="/searchByCountry" component={SearchByCountry} />
         </Switch>
       </BrowserRouter>
     );

@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { IconButton } from "@material-ui/core";
 
@@ -12,17 +12,18 @@ function SearchByCity() {
     setTextValue(e.target.value);
   };
 
-  const getData = () => {
+  const checkMatch = () => {};
+
+  useEffect(() => {
+    //calling useEffect method on page load for fuctional components or componentDidMount() for class components
     fetch(url)
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
         setData(json);
       }, 2000);
-  };
-  useEffect(() => {
-    //calling useEffect method on page load for fuctional components or componentDidMount() for class components
   }, []);
+
   if (!data) {
     return <div>Loading..</div>;
   }
@@ -30,7 +31,7 @@ function SearchByCity() {
   return (
     <div>
       <h1>{textValue}</h1>
-      <IconButton aria-label="search" onClick={getData}>
+      <IconButton aria-label="search" onClick={() => checkMatch}>
         Search
       </IconButton>
       <TextField
@@ -41,16 +42,15 @@ function SearchByCity() {
         value={textValue}
         onChange={handleTextFieldChange}
       />
-      {data.geonames?.map((geo) => {
-        if (textValue === geo.name) {
-          return (
-            <div>
-              <h5>{geo.population}</h5>
-            </div>
-          );
-        }
-        return <div>City not found!</div>;
-      })}
+      {textValue &&
+        data.geonames?.map(
+          (geo) =>
+            geo.name.includes(textValue) && (
+              <h5>
+                Population of {geo.name} is {geo.population}
+              </h5>
+            )
+        )}
     </div>
   );
 }

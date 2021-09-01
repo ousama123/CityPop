@@ -1,8 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles({
   buttonStyle: {
     width: 200,
@@ -15,37 +14,40 @@ const useStyles = makeStyles({
 });
 
 function WelcomePage() {
-  let history = useHistory();
-
-  const nav = (path) => {
-    history.push(path);
-  };
-
   const classes = useStyles();
+  const history = useHistory();
+  function handleClick(path) {
+    history.push(path);
+  }
   return (
-    <div>
-      <Button
-        onClick={() => nav("/SearchByCity")}
-        classes={{
-          root: classes.buttonStyle,
-        }}
-        className="welcomeButton"
-        variant="contained"
-        color="secondary"
+    <div className="container">
+      <div
+        style={{ height: "100vh" }}
+        className="d-flex justify-content-center align-items-center"
       >
-        SEARCH BY CITY
-      </Button>
-      <Button
-        onClick={() => nav("/SearchByCountry")}
-        classes={{
-          root: classes.buttonStyle,
-        }}
-        className="welcomeButton"
-        variant="contained"
-        color="secondary"
-      >
-        SEARCH BY COUNTRY
-      </Button>
+        <h1>CityPop</h1>
+        <Button
+          onClick={() => handleClick("searchByCity")}
+          classes={{
+            root: classes.buttonStyle,
+          }}
+          variant="contained"
+          color="secondary"
+        >
+          SEARCH BY CITY
+        </Button>
+
+        <Button
+          onClick={() => handleClick("searchByCountry")}
+          classes={{
+            root: classes.buttonStyle,
+          }}
+          variant="contained"
+          color="secondary"
+        >
+          SEARCH BY COUNTRY
+        </Button>
+      </div>
     </div>
   );
 }
