@@ -1,9 +1,7 @@
-import Button from "@material-ui/core/Button";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
-const navigateToCityPage = () => {};
-const navigateToCountryPage = () => {};
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
   buttonStyle: {
@@ -15,12 +13,19 @@ const useStyles = makeStyles({
     border: 0,
   },
 });
+
 function WelcomePage() {
+  let history = useHistory();
+
+  const nav = (path) => {
+    history.push(path);
+  };
+
   const classes = useStyles();
   return (
     <div>
       <Button
-        onClick={navigateToCityPage}
+        onClick={() => nav("/SearchByCity")}
         classes={{
           root: classes.buttonStyle,
         }}
@@ -31,7 +36,7 @@ function WelcomePage() {
         SEARCH BY CITY
       </Button>
       <Button
-        onClick={navigateToCountryPage}
+        onClick={() => nav("/SearchByCountry")}
         classes={{
           root: classes.buttonStyle,
         }}
