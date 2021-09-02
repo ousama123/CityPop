@@ -20,33 +20,34 @@ function WelcomePage() {
     history.push(path);
   }
   return (
-    <div className="container">
-      <div
-       style={{ height: "100vh" }}
-       className="d-flex justify-content-center align-items-center"
-      >
-        <h1>CityPop</h1>
-        <Button
-          onClick={() => handleClick("searchByCity")}
-          classes={{
-            root: classes.buttonStyle,
-          }}
-          variant="contained"
-          color="secondary"
-        >
-          SEARCH BY CITY
-        </Button>
+    <div className="main">
+      <div className="container">
+        <div  className="centered">
+          <div className="CityPop">
+            <h1>CityPop</h1>
+          </div>
+          <Button
+            onClick={() => handleClick("searchByCity")}
+            classes={{
+              root: classes.buttonStyle,
+            }}
+            variant="contained"
+            color="secondary"
+          >
+            SEARCH BY CITY
+          </Button>
 
-        <Button
-          onClick={() => handleClick("searchByCountry")}
-          classes={{
-            root: classes.buttonStyle,
-          }}
-          variant="contained"
-          color="secondary"
-        >
-          SEARCH BY COUNTRY
-        </Button>
+          <Button
+            onClick={() => handleClick("searchByCountry")}
+            classes={{
+              root: classes.buttonStyle,
+            }}
+            variant="contained"
+            color="secondary"
+          >
+            SEARCH BY COUNTRY
+          </Button>
+        </div>
       </div>
     </div>
   );
