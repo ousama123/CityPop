@@ -22,8 +22,8 @@ function WelcomePage() {
   return (
     <div className="container">
       <div
-        style={{ height: "100vh" }}
-        className="d-flex justify-content-center align-items-center"
+       style={{ height: "100vh" }}
+       className="d-flex justify-content-center align-items-center"
       >
         <h1>CityPop</h1>
         <Button

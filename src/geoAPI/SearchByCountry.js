@@ -1,7 +1,12 @@
 import React from "react";
+import SearchAPI from "./SearchAPI";
 
 function SearchByCountry() {
-  return <div>Country</div>;
+  return (
+    <div>
+      <SearchAPI label="Enter a Country" searchType="COUNTRY"></SearchAPI>
+    </div>
+  );
 }
 
 export default SearchByCountry;
