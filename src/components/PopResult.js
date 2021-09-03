@@ -5,10 +5,10 @@ function PopResult(props) {
     <div className="main">
       <div className="container">
         <div className="centered">
-          <p>CityName</p>
+          <h4>{props.location.state.valueInput}</h4>
           <div className="population">
-            <p>Population</p>
-            <div className="result">{props.result}</div>
+            <div>Population</div>
+            <h2>{props.location.state.populationResult}</h2>
           </div>
         </div>
       </div>

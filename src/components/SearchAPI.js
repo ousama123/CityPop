@@ -6,9 +6,28 @@ import { useHistory } from "react-router-dom";
 
 function SearchAPI(props) {
   const [data, setData] = useState([]);
-  const [textValue, setTextValue] = useState("");
+  const [textValue, setTextValue] = useState();
+  const [population, setPopulation] = useState(5);
+  const [cities, setCities] = useState([]);
+  const [noMatch, setNoMatch] = useState("");
+  const history = useHistory();
+
   const handleTextFieldChange = (e) => {
-    setTextValue(e.target.value);
+    const value = e.target.value;
+    setTextValue(value);
+  };
+
+  const search = () => {
+    return (
+      <div>
+        {textValue &&
+          data.geonames?.map((geo) => {
+            if (geo.name.includes(textValue)) {
+              return <h5>{geo.population}</h5>;
+            }
+          })}
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -21,9 +40,20 @@ function SearchAPI(props) {
         setData(json);
       }, 2000);
   }, []);
-  const history = useHistory();
+
   function handleClick(path) {
-    history.push(path);
+    // a method that handle the navigatiuon to another page
+    history.push({
+      pathname: path,
+      state: {
+        valueInput: textValue,
+        populationResult: population,
+        noMatchFound: noMatch,
+      },
+    });
+    {
+      /**handle no input error */
+    }
   }
   if (!data) {
     return <div>Loading..</div>;
@@ -35,33 +65,23 @@ function SearchAPI(props) {
         <div className="centered">
           <p>SEARCH BY {props.searchType}</p>
           <TextField
-            color="secondary"
+            color="primary"
             id="outlined-basic"
             variant="outlined"
             label={props.label}
-            helperText="Must be filled out"
             value={textValue}
             onChange={handleTextFieldChange}
           />
           <div>
             <IconButton
               onClick={() => handleClick(props.handleClick)}
-              color="secondary"
+              color="primary"
               aria-label="search"
             >
               <SearchIcon fontSize="large" />
             </IconButton>
           </div>
-
-          {textValue &&
-            data.geonames?.map(
-              (geo) =>
-                geo.name.includes(textValue) && (
-                  <h5>
-                    Population of {geo.name} is {geo.population}
-                  </h5>
-                )
-            )}
+          {search()}
         </div>
       </div>
     </div>

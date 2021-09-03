@@ -1,24 +1,26 @@
 import React from "react";
 import "./App.css";
-import WelcomePage from "./geoAPI/WelcomePage.js";
-import SearchByCity from "./geoAPI/SearchByCity";
-import SearchByCountry from "./geoAPI/SearchByCountry";
-import PopResult from "./geoAPI/PopResult";
-import CitiesByCountry from "./geoAPI/CitiesByCountry";
+import WelcomePage from "./components/WelcomePage.js";
+import SearchByCity from "./components/SearchByCity";
+import SearchByCountry from "./components/SearchByCountry";
+import PopResult from "./components/PopResult";
+import CitiesByCountry from "./components/CitiesByCountry";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Logo from "./components/Logo";
 
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={WelcomePage} />
-          <Route exact path="/searchByCity" component={SearchByCity} />
-          <Route exact path="/searchByCountry" component={SearchByCountry} />
-          <Route exact path="/citiesByCountry" component={CitiesByCountry} />
-          <Route exact path="/popResult" component={PopResult} />
-        </Switch>
-      </BrowserRouter>
+        <BrowserRouter>
+        <Logo/>
+          <Switch>
+            <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/searchByCity" component={SearchByCity} />
+            <Route exact path="/searchByCountry" component={SearchByCountry} />
+            <Route exact path="/citiesByCountry" component={CitiesByCountry} />
+            <Route exact path="/popResult" component={PopResult} />
+          </Switch>
+        </BrowserRouter>
     );
   }
 }

@@ -20,11 +20,10 @@ function WelcomePage() {
     history.push(path);
   }
   return (
-    <div className="main">
+
       <div className="container">
-        <div  className="centered">
+        <div className="centered">
           <div className="CityPop">
-            <h1>CityPop</h1>
           </div>
           <Button
             onClick={() => handleClick("searchByCity")}
@@ -32,7 +31,7 @@ function WelcomePage() {
               root: classes.buttonStyle,
             }}
             variant="contained"
-            color="secondary"
+            color="primary"
           >
             SEARCH BY CITY
           </Button>
@@ -43,12 +42,11 @@ function WelcomePage() {
               root: classes.buttonStyle,
             }}
             variant="contained"
-            color="secondary"
+            color="primary"
           >
             SEARCH BY COUNTRY
           </Button>
         </div>
-      </div>
     </div>
   );
 }

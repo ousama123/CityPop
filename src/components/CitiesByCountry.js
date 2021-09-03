@@ -5,7 +5,7 @@ function CitiesByCountry(props) {
     <div className="main">
       <div className="container">
         <div className="centered">
-          <p>CountryName</p>
+          <p>{props.location.state.valueInput}</p>
           <div>{/**list of buttons of the cities */}</div>
         </div>
       </div>
