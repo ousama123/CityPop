@@ -12,11 +12,12 @@
   max-height: 500px;
 }
 .centered {
-  margin-top: 30%;
+  margin-top: 20%;
   text-align: center;
+  padding: 10px;
 }
 
-.population{
+.population {
   padding: 10px;
   border: 0.5px solid #000000;
   position: fixed;
@@ -30,7 +31,11 @@
   max-height: 100px;
 }
 
-
 .logo {
   text-align: center;
-  }
+}
+.buttonList {
+
+  flex-direction: column;
+  text-align: center;
+}
