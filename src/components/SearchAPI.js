@@ -87,11 +87,12 @@ function SearchAPI(props) {
           />
           <div>
             <IconButton
+         
               onClick={(e) => handleClick(e)}
               color="primary"
               aria-label="search"
             >
-              <SearchIcon fontSize="large" />
+              <SearchIcon   className="searchButton" fontSize="large" />
             </IconButton>
           </div>
           <p className="errorMessage">{errorMessage}</p>

@@ -6,7 +6,9 @@ function PopResult(props) {
     <div className="main">
       <div className="container">
         <div className="centered">
-          <h4>{props.location.state.valueInput}</h4>
+          <div className="cityResult">
+            <h4>{props.location.state.valueInput}</h4>
+          </div>
           <div className="population">
             <div>Population</div>
             <h2>{props.location.state.population}</h2>

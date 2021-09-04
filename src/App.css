@@ -1,6 +1,6 @@
 .container {
   padding: 10px;
-
+  
   position: fixed;
   top: 50%;
   left: 50%;
@@ -8,11 +8,11 @@
 
   width: 500px;
   max-width: 500px;
-  height: 500px;
-  max-height: 500px;
+  height: 450px;
+  max-height: 450px;
 }
 .centered {
-  margin-top: 20%;
+  margin-top: 15%;
   text-align: center;
   padding: 10px;
 }
@@ -31,9 +31,6 @@
   max-height: 100px;
 }
 
-.logo {
-  text-align: center;
-}
 .buttonList {
   flex-direction: column;
   text-align: center;
@@ -42,16 +39,24 @@
 .errorMessage {
   color: red;
 }
-.logo {
-  text-align: center;
-  font-size: 40px;
-  color: black;
-}
 
 .logo:hover {
   cursor: pointer;
   color: rgb(102, 101, 101);
 }
-.input{
+.input {
   width: 400px;
+}
+.searchButton{
+ margin: 10px;
+}
+.logoMain{
+  text-align: center;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cityResult {
+ margin: 15px;
 }
