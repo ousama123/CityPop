@@ -20,13 +20,13 @@ function CitiesByCountry(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const handleClick = (e, push, population) => {
+  const handleClick = (e, push, population, cityName) => {
     //navigate to citiesByCountry page
     history.push({
       pathname: push,
       state: {
         population,
-        valueInput,
+        valueInput: cityName,
       },
     });
   };
@@ -41,10 +41,12 @@ function CitiesByCountry(props) {
           {cities.length !== 0 ? (
             cities.slice(0, 5).map(
               //taking only 5 cities of the cities list
-              (x, i) => (
+              (city, i) => (
                 <div className="buttonList">
                   <Button
-                    onClick={(e) => handleClick(e, "PopResult", x.population)}
+                    onClick={(e) =>
+                      handleClick(e, "PopResult", city.population, city.name)
+                    }
                     classes={{
                       root: classes.buttonStyle,
                     }}
@@ -52,13 +54,13 @@ function CitiesByCountry(props) {
                     variant="contained"
                     color="primary"
                   >
-                    {x.name}
+                    {city.name}
                   </Button>
                 </div>
               )
             )
           ) : (
-            <p className="fs-3 mt-3">City list is empty!</p>
+            <p className="errorMessage">City list is empty!</p> //if the country is existed but has no city list fetched from the API-call
           )}
         </div>
       </div>

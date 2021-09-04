@@ -8,7 +8,7 @@ function SearchAPI(props) {
   const [data, setData] = useState([]);
   const [textValue, setTextValue] = useState("");
   const [cities, setCities] = useState([]);
-  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
   const searchType = props.searchType.toUpperCase(); //get the searchType from each component to show the related page(city or country)
@@ -29,8 +29,9 @@ function SearchAPI(props) {
   console.log(data);
 
   function handleClick(e) {
-    e.preventDefault();
-    if (searchType === "CITY") {
+    if(textValue === "")
+    setErrorMessage("Please enter a value")
+    else if (searchType === "CITY") {
       //handle the searchByCity part
       let index = data.findIndex((x) => x.name === textValue); //get the index of the wanted city
       if (index !== -1) {
@@ -47,13 +48,13 @@ function SearchAPI(props) {
         });
       } else {
         //if there is no such city index
-        setMessage("No such city found!");
+        setErrorMessage("No such city found!");
       }
     } else {
       //searchType === "COUNTRY"
       //handle the searchByCountry part
-      let res = data.filter((x) => x.countryName === textValue);
-      res.length !== 0 ? setCities(res) : setMessage("No such country found!");
+      let res = data.filter((country) => country.countryName === textValue);
+      res.length !== 0 ? setCities(res) : setErrorMessage("No such country found!");
       history.push({
         //navigate to citiesByCountry page
         pathname: "citiesByCountry",
@@ -76,6 +77,7 @@ function SearchAPI(props) {
         <div className="centered">
           <p>SEARCH BY {searchType}</p>
           <TextField
+          className="input"
             color="primary"
             id="outlined-basic"
             variant="outlined"
@@ -92,7 +94,7 @@ function SearchAPI(props) {
               <SearchIcon fontSize="large" />
             </IconButton>
           </div>
-          <p className="fs-3 mt-3">{message}</p>
+          <p className="errorMessage">{errorMessage}</p>
         </div>
       </div>
     </div>

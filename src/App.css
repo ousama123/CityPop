@@ -1,6 +1,6 @@
 .container {
   padding: 10px;
-  border: 0.5px solid #000000;
+
   position: fixed;
   top: 50%;
   left: 50%;
@@ -35,7 +35,23 @@
   text-align: center;
 }
 .buttonList {
-
   flex-direction: column;
   text-align: center;
+}
+
+.errorMessage {
+  color: red;
+}
+.logo {
+  text-align: center;
+  font-size: 40px;
+  color: black;
+}
+
+.logo:hover {
+  cursor: pointer;
+  color: rgb(102, 101, 101);
+}
+.input{
+  width: 400px;
 }
