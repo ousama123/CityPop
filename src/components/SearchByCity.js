@@ -7,9 +7,8 @@ function SearchByCity() {
     <div >
       <div>
         <SearchAPI
-          handleClick="popResult"
           label="Enter a City"
-          searchType="CITY"
+          searchType="city"
         ></SearchAPI>
       </div>
     </div>

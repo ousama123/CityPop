@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles({
   buttonStyle: {
     width: 200,
@@ -23,8 +24,6 @@ function WelcomePage() {
 
       <div className="container">
         <div className="centered">
-          <div className="CityPop">
-          </div>
           <Button
             onClick={() => handleClick("searchByCity")}
             classes={{

@@ -3,56 +3,67 @@ import TextField from "@material-ui/core/TextField";
 import { IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router-dom";
-
+import axios from "axios";
 function SearchAPI(props) {
   const [data, setData] = useState([]);
-  const [textValue, setTextValue] = useState();
-  const [population, setPopulation] = useState(5);
+  const [textValue, setTextValue] = useState("");
   const [cities, setCities] = useState([]);
-  const [noMatch, setNoMatch] = useState("");
+  const [message, setMessage] = useState("");
   const history = useHistory();
+
+  const searchType = props.searchType.toUpperCase(); //get the searchType from each component to show the related page(city or country)
 
   const handleTextFieldChange = (e) => {
     const value = e.target.value;
     setTextValue(value);
   };
 
-  const search = () => {
-    return (
-      <div>
-        {textValue &&
-          data.geonames?.map((geo) => {
-            if (geo.name.includes(textValue)) {
-              return <h5>{geo.population}</h5>;
-            }
-          })}
-      </div>
-    );
-  };
-
   useEffect(() => {
     //calling useEffect method on page load for fuctional components or componentDidMount() for class components
     const url = "http://api.geonames.org/searchJSON?username=weknowit";
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        setData(json);
-      }, 2000);
+    axios
+      .get(url)
+      .then((response) => setData(response.data.geonames))
+      .catch((error) => alert(error));
   }, []);
+  console.log(data);
 
-  function handleClick(path) {
-    // a method that handle the navigatiuon to another page
-    history.push({
-      pathname: path,
-      state: {
-        valueInput: textValue,
-        populationResult: population,
-        noMatchFound: noMatch,
-      },
-    });
-    {
-      /**handle no input error */
+  function handleClick(e) {
+    e.preventDefault();
+    if (searchType === "CITY") {
+      //handle the searchByCity part
+      let index = data.findIndex((x) => x.name === textValue); //get the index of the wanted city
+      if (index !== -1) {
+        let name = data[index].name;
+        let population = data[index].population;
+        history.push({
+          //navigate to popResult page
+          pathname: "popResult",
+          state: {
+            //send current states to next page to handle
+            valueInput: name,
+             population,
+          },
+        });
+      } else {
+        //if there is no such city index
+        setMessage("No such city found!");
+      }
+    } else {
+      //searchType === "COUNTRY"
+      //handle the searchByCountry part
+      let res = data.filter((x) => x.countryName === textValue);
+      res.length !== 0 ? setCities(res) : setMessage("No such country found!");
+      history.push({
+        //navigate to citiesByCountry page
+        pathname: "citiesByCountry",
+        state: {
+          //send current states to next page to handle
+          citiesList: res,
+          valueInput: textValue,
+      
+        },
+      });
     }
   }
   if (!data) {
@@ -63,7 +74,7 @@ function SearchAPI(props) {
     <div className="main">
       <div className="container">
         <div className="centered">
-          <p>SEARCH BY {props.searchType}</p>
+          <p>SEARCH BY {searchType}</p>
           <TextField
             color="primary"
             id="outlined-basic"
@@ -74,14 +85,14 @@ function SearchAPI(props) {
           />
           <div>
             <IconButton
-              onClick={() => handleClick(props.handleClick)}
+              onClick={(e) => handleClick(e)}
               color="primary"
               aria-label="search"
             >
               <SearchIcon fontSize="large" />
             </IconButton>
           </div>
-          {search()}
+          <p className="fs-3 mt-3">{message}</p>
         </div>
       </div>
     </div>
