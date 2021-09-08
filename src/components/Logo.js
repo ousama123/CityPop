@@ -1,7 +1,6 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-function Logo(props) {
+function Logo() {
   const history = useHistory();
   function handleClick() {
     history.push("/");
@@ -15,4 +14,4 @@ function Logo(props) {
   );
 }
 
-export default withRouter(Logo);
+export default Logo;

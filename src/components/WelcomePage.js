@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
+
 const useStyles = makeStyles({
   buttonStyle: {
     width: 200,
@@ -15,16 +16,12 @@ const useStyles = makeStyles({
 
 function WelcomePage() {
   const classes = useStyles();
-  const history = useHistory();
-  function handleClick(path) {
-    history.push(path);
-  }
-  return (
 
-      <div className="container">
-        <div className="centered">
+  return (
+    <div className="container">
+      <div className="centered">
+        <Link style={{ textDecoration: "none" }} to="/search/city">
           <Button
-            onClick={() => handleClick("searchByCity")}
             classes={{
               root: classes.buttonStyle,
             }}
@@ -33,9 +30,9 @@ function WelcomePage() {
           >
             SEARCH BY CITY
           </Button>
-
+        </Link>
+        <Link style={{ textDecoration: "none" }} to="/search/country">
           <Button
-            onClick={() => handleClick("searchByCountry")}
             classes={{
               root: classes.buttonStyle,
             }}
@@ -44,7 +41,8 @@ function WelcomePage() {
           >
             SEARCH BY COUNTRY
           </Button>
-        </div>
+        </Link>
+      </div>
     </div>
   );
 }

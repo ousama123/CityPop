@@ -1,101 +1,126 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Button } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+
+//styling the buttons
+const useStyles = makeStyles({
+  buttonStyle: {
+    width: 300,
+    height: 40,
+    padding: 10,
+    margin: 5,
+    borderRadius: 3,
+    border: 0,
+  },
+});
+
 function SearchAPI(props) {
-  const [data, setData] = useState([]);
+  const classes = useStyles();
   const [textValue, setTextValue] = useState("");
   const [cities, setCities] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [searchMessage, setSearchMessage] = useState("");
   const history = useHistory();
+  console.log(props);
+  const searchType = props.match.params.searchType; //get the searchType from each component to show the related page(city or country)
 
-  const searchType = props.searchType.toUpperCase(); //get the searchType from each component to show the related page(city or country)
 
-  const handleTextFieldChange = (e) => {
-    const value = e.target.value;
-    setTextValue(value);
+  //This method takes care of the navigation to the popResult page when one of the cities list is clicked.
+  const handleButtonClick = (population, cityName) => {
+    history.push(`/popResult/${cityName}/${population}`);
   };
 
-  useEffect(() => {
-    //calling useEffect method on page load for fuctional components or componentDidMount() for class components
-    const url = "http://api.geonames.org/searchJSON?username=weknowit";
-    axios
-      .get(url)
-      .then((response) => setData(response.data.geonames))
-      .catch((error) => alert(error));
-  }, []);
-  console.log(data);
-
   function handleClick(e) {
-    if(textValue === "")
-    setErrorMessage("Please enter a value")
-    else if (searchType === "CITY") {
-      //handle the searchByCity part
-      let index = data.findIndex((x) => x.name === textValue); //get the index of the wanted city
-      if (index !== -1) {
-        let name = data[index].name;
-        let population = data[index].population;
-        history.push({
-          //navigate to popResult page
-          pathname: "popResult",
-          state: {
-            //send current states to next page to handle
-            valueInput: name,
-             population,
-          },
-        });
-      } else {
-        //if there is no such city index
-        setErrorMessage("No such city found!");
-      }
+    if (textValue === "") setErrorMessage("Please enter a value");
+    else if (searchType === "city") {
+      searchByCity(e);
     } else {
-      //searchType === "COUNTRY"
-      //handle the searchByCountry part
-      let res = data.filter((country) => country.countryName === textValue);
-      res.length !== 0 ? setCities(res) : setErrorMessage("No such country found!");
-      history.push({
-        //navigate to citiesByCountry page
-        pathname: "citiesByCountry",
-        state: {
-          //send current states to next page to handle
-          citiesList: res,
-          valueInput: textValue,
-      
-        },
-      });
+      searchByCountry(e);
     }
   }
-  if (!data) {
-    return <div>Loading..</div>;
-  }
+
+  //this method takes care of the search by city part
+  const searchByCity = (e) => {
+    e.preventDefault();
+    setSearchMessage("Searching...");
+    let url = `http://api.geonames.org/searchJSON?name_equals=${textValue}&featureClass=P&maxRows=1&username=weknowit`;
+    axios
+      .get(url)
+      .then((response) => {
+        let res = response.data.geonames;
+        console.log(res[0]);
+        res.length !== 0
+          ? history.push(`/popResult/${res[0].name}/${res[0].population}`) // res[0] is for accessing the first index of the array which contains the first row of the data(maxRows=1)
+          : setErrorMessage("No cities found!");
+      })
+      .catch((error) => alert(error));
+  };
+
+  //this method takes care of the search by country part
+  const searchByCountry = (e) => {
+    setSearchMessage("Searching...");
+    let url = `http://api.geonames.org/searchJSON?q=${textValue}&featureCode=PPLA&featureCode=PPLC&orderby=population&maxRows=3&username=weknowit`;
+    axios
+      .get(url)
+      .then((response) =>
+        response.data.geonames.length !== 0
+          ? setCities(response.data.geonames)
+          : setErrorMessage("No countries found!")
+      )
+      .catch((error) => alert(error));
+  };
 
   return (
     <div className="main">
       <div className="container">
         <div className="centered">
-          <p>SEARCH BY {searchType}</p>
+          <p>SEARCH BY {searchType.toUpperCase()}</p>
           <TextField
-          className="input"
+            className="input"
             color="primary"
             id="outlined-basic"
             variant="outlined"
-            label={props.label}
+            label={`Enter a ${searchType}`}
             value={textValue}
-            onChange={handleTextFieldChange}
+            onChange={(e) => setTextValue(e.target.value)}
           />
           <div>
             <IconButton
-         
               onClick={(e) => handleClick(e)}
               color="primary"
               aria-label="search"
             >
-              <SearchIcon   className="searchButton" fontSize="large" />
+              <SearchIcon className="searchButton" fontSize="large" />
             </IconButton>
           </div>
           <p className="errorMessage">{errorMessage}</p>
+          {/** This part is handling the cities list part. It shows the list of cities of the given country */}
+          {cities.length !== 0 ? (
+            cities.map((city, i) => (
+              <div key={i} className="buttonList">
+                <Button
+                  onClick={() => handleButtonClick(city.population, city.name)}
+                  classes={{
+                    root: classes.buttonStyle,
+                  }}
+                  variant="contained"
+                  color="primary"
+                >
+                  {city.name}
+                </Button>
+              </div>
+            ))
+          ) : (
+            <div>
+              {searchMessage && (
+                <p className="searchMessage">{searchMessage}</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

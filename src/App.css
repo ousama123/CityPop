@@ -48,12 +48,12 @@
   width: 400px;
 }
 .searchButton{
- margin: 10px;
+ margin: 5px;
 }
 .logoMain{
   text-align: center;
   position: fixed;
-  top: 30%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
