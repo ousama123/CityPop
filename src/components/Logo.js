@@ -6,10 +6,12 @@ function Logo() {
     history.push("/");
   }
   return (
-    <div className="logoMain">
-      <h1 onClick={handleClick} className="logo">
-        CityPop
-      </h1>
+    <div className="main">
+      <div className="logoMain">
+        <h1 onClick={handleClick} className="logo">
+          CityPop
+        </h1>
+      </div>
     </div>
   );
 }

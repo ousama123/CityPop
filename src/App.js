@@ -15,8 +15,11 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={WelcomePage} />
           <Route exact path="/search/:searchType" component={SearchAPI} />
-          <Route exact path="/citiesList/:cities/:countryName" component={CitiesList} />
-          <Route exact path="/popResult/:name/:population" component={PopResult}
+          <Route exact path="/citiesList" component={CitiesList} />
+          <Route
+            exact
+            path="/popResult/:name/:population"
+            component={PopResult}
           />
         </Switch>
       </BrowserRouter>

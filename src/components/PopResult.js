@@ -9,7 +9,7 @@ function PopResult(props) {
       <div className="container">
         <div className="centered">
           <div className="cityResult">
-            <h4>{cityName}</h4>
+            <h4>{cityName.toUpperCase()}</h4>
           </div>
           <div className="population">
             <div>Population</div>

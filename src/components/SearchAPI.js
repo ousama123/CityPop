@@ -7,11 +7,9 @@ import axios from "axios";
 
 function SearchAPI(props) {
   const [textValue, setTextValue] = useState("");
-  const [cities, setCities] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [searchMessage, setSearchMessage] = useState("");
   const history = useHistory();
-  console.log(props);
   const searchType = props.match.params.searchType; //get the searchType from each component to show the related page(city or country)
 
   function handleClick(e) {
@@ -56,14 +54,12 @@ function SearchAPI(props) {
     axios
       .get(url)
       .then((response) => {
-        let res = response.data.geonames;
-        console.log(res);
-        console.log(res);
-        console.log(res);
-
-        if (res.length !== 0) {
-          setCities(res);
-          history.push(`/citiesList/${cities}/${res[0].countryName}`);
+        let citiesList = response.data.geonames;
+        if (citiesList.length !== 0) {
+          history.push({
+            pathname: "/citiesList",
+            state: { countryName: citiesList[0].countryName, cities: citiesList },
+          });
         } else {
           setErrorMessage("No countries found!");
         }
@@ -94,19 +90,12 @@ function SearchAPI(props) {
               <SearchIcon className="searchButton" fontSize="large" />
             </IconButton>
           </div>
-          <p className="errorMessage">{errorMessage}</p>
-          {/** This part is handling the cities list part. It shows the list of cities of the given country */}
-          {cities.length !== 0 ? (
-            <div>should be citiesList Page </div>
-          ) : (
-            <div>
-              {!errorMessage && (
-                <div>
-                  <p className="searchMessage">{searchMessage}</p>
-                </div>
-              )}
-            </div>
-          )}
+          <div>
+            <p className="errorMessage">{errorMessage}</p>
+          </div>
+          <div>
+            {!errorMessage && <p className="searchMessage">{searchMessage}</p>}
+          </div>
         </div>
       </div>
     </div>
