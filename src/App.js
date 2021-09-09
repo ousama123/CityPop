@@ -1,31 +1,32 @@
 import React from "react";
 import "./App.css";
-import WelcomePage from "./geoAPI/WelcomePage.js";
-import SearchByCity from "./geoAPI/SearchByCity";
-import SearchByCountry from "./geoAPI/SearchByCountry";
+import WelcomePage from "./components/WelcomePage.js";
+import CitiesList from "./components/CitiesList";
+import PopResult from "./components/PopResult";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Logo from "./components/Logo";
+import SearchAPI from "./components/SearchAPI";
 
 class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <h1>CityPop</h1>
-          <WelcomePage />
-        </div>
+        <Logo />
         <Switch>
           <Route exact path="/" component={WelcomePage} />
-          <Route exact path="/SearchByCity" component={SearchByCity} />
-          <Route exact path="/SearchByCountry" component={SearchByCountry} />
+          <Route exact path="/search/:searchType" component={SearchAPI} />
+          <Route exact path="/citiesList" component={CitiesList} />
+          <Route
+            exact
+            path="/popResult/:name/:population"
+            component={PopResult}
+          />
         </Switch>
+
+
       </BrowserRouter>
+
+
     );
   }
 }
