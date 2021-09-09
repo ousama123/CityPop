@@ -22,7 +22,11 @@ class App extends React.Component {
             component={PopResult}
           />
         </Switch>
+
+
       </BrowserRouter>
+
+
     );
   }
 }

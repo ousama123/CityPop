@@ -69,7 +69,7 @@ function SearchAPI(props) {
 
   return (
     <div className="main">
-      <div className="container">
+
         <div className="centered">
           <p>SEARCH BY {searchType.toUpperCase()}</p>
           <TextField
@@ -98,7 +98,6 @@ function SearchAPI(props) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

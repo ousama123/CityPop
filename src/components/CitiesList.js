@@ -27,9 +27,8 @@ function CitiesList(props) {
 
   return (
     <div className="main">
-      <div className="container">
         <div className="centered">
-          <div className="cityResult">
+          <div className="countryResult">
             <h4>{countryName.toUpperCase()}</h4>
           </div>
           {/** This part is handling the cities list part. It shows the list of cities of the given country */}
@@ -49,7 +48,6 @@ function CitiesList(props) {
           ))}
         </div>
       </div>
-    </div>
   );
 }
 
